@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     int countset = 33;
     int totalcount =0;
     String defaultValue;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +79,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mp = MediaPlayer.create(MainActivity.this, R.raw.edtsoundone);
+
+
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-//                MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.tosbiscountsound);
-//                mediaPlayer.start();
+
+                //mp.start();
+
+                try {
+                    if (mp.isPlaying()){
+                        mp.stop();
+                        mp.release();
+                        mp = MediaPlayer.create(getApplicationContext(),R.raw.edtsoundone);
+                    } mp.start();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+//                try {
+//                    if (mp.isPlaying()) {
+//                        mp.stop();
+//                        mp.release();
+//                        mp = MediaPlayer.create(context, R.raw.sound);
+//                    } mp.start();
+//                } catch(Exception e) { e.printStackTrace();
+
+//                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                    public void onCompletion(MediaPlayer mp) {
+//                        //code
+//
+//                        onCompletion(mp);
+//
+//                    }
+//                });
+
+
+
 
                 if (currentcounter == countset){
                     currentcounter = 0;
@@ -113,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
 
 
@@ -163,6 +200,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void onCompletion(MediaPlayer mp) {
+        mp.release();
+    }
     private void thread() {
 
         imageView.setVisibility(View.GONE);
