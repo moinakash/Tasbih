@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 if (SoundInt == 0){
                     SoundInt = 1;
 
-                    btnSound.setText("Turn Off Sound");
+                    btnSound.setText("Sound Mode");
 
-                }else {
+                }else if (SoundInt == 1){
+                    SoundInt = 2;
+                    btnSound.setText("Vibrator Mode");
+                }else if (SoundInt == 2){
                     SoundInt = 0;
-                    btnSound.setText("Turn On Sound");
+                    btnSound.setText("sound off mode");
                 }
 
                 SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -140,6 +144,17 @@ public class MainActivity extends AppCompatActivity {
                             mp.release();
                             mp = MediaPlayer.create(getApplicationContext(),R.raw.metaltick);
                         } mp.start();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+                if (SoundInt == 2){
+
+                    try {
+                        Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            vibe.vibrate(100);
 
                     }catch (Exception e){
                         e.printStackTrace();
