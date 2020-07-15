@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     GifImageView gifImageView;
     ImageView imageView;
-    Button button, btnReset, btn33, btn99, btnttlr;
+    Button button, btnReset, btn33, btn99, btnttlr, btnSound;
     TextView tvCurrentCounter, tvSetCount, tvTotalcount;
 
 
@@ -28,8 +28,11 @@ public class MainActivity extends AppCompatActivity {
     int currentcounter =0;
     int countset = 33;
     int totalcount =0;
+    int SoundInt = 0;
     String defaultValue;
     MediaPlayer mp;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tvCurrentCounter = findViewById(R.id.idCurrentCount);
         btn33 = findViewById(R.id.id33);
         btn99 = findViewById(R.id.id99);
+        btnSound = findViewById(R.id.idSound);
         tvSetCount = findViewById(R.id.idCountSet);
         tvTotalcount = findViewById(R.id.idtotalCount);
         btnttlr = findViewById(R.id.idttlr);
@@ -51,8 +55,30 @@ public class MainActivity extends AppCompatActivity {
         currentcounter = sharedPref.getInt("Count",0);
         countset = sharedPref.getInt("CountSet",0);
         totalcount = sharedPref.getInt("TotalCount",0);
+        SoundInt = sharedPref.getInt("Soundintt",0);
         tvCurrentCounter.setText(""+ currentcounter);
         tvTotalcount.setText(""+ totalcount);
+
+        btnSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SoundInt == 0){
+                    SoundInt = 1;
+
+                    btnSound.setText("Turn Off Sound");
+
+                }else {
+                    SoundInt = 0;
+                    btnSound.setText("Turn On Sound");
+                }
+
+                SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("Soundintt", Integer.parseInt(""+ SoundInt));
+                editor.commit();
+
+            }
+        });
 
         btn33.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mp = MediaPlayer.create(MainActivity.this, R.raw.edtsoundone);
+        mp = MediaPlayer.create(MainActivity.this, R.raw.metaltick);
 
 
 
@@ -89,18 +115,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                //mp.start();
+                if (SoundInt == 1){
 
-                try {
-                    if (mp.isPlaying()){
-                        mp.stop();
-                        mp.release();
-                        mp = MediaPlayer.create(getApplicationContext(),R.raw.edtsoundone);
-                    } mp.start();
+                    try {
+                        if (mp.isPlaying()){
+                            mp.stop();
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(),R.raw.metaltick);
+                        } mp.start();
 
-                }catch (Exception e){
-                    e.printStackTrace();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
+
+
 
 //                try {
 //                    if (mp.isPlaying()) {
