@@ -85,11 +85,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tvSetCount.setText("33");
 
+                if (countset>33){
+                    if (currentcounter>33){
+                        tvCurrentCounter.setText(""+(currentcounter%33));
+                        currentcounter = currentcounter%33;
+                    }
+
+                }
+
+
+
                 countset = 33;
                 SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("CountSet", Integer.parseInt(""+ countset));
+                editor.putInt("TotalCount", Integer.parseInt(""+ totalcount));
+                editor.putInt("Count", Integer.parseInt(""+ currentcounter));
                 editor.commit();
+
+
+
+
+
             }
         });
 
@@ -132,28 +149,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//                try {
-//                    if (mp.isPlaying()) {
-//                        mp.stop();
-//                        mp.release();
-//                        mp = MediaPlayer.create(context, R.raw.sound);
-//                    } mp.start();
-//                } catch(Exception e) { e.printStackTrace();
-
-//                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                    public void onCompletion(MediaPlayer mp) {
-//                        //code
-//
-//                        onCompletion(mp);
-//
-//                    }
-//                });
-
-
 
 
                 if (currentcounter == countset){
                     currentcounter = 0;
+                }else if(currentcounter>countset){
+                    currentcounter = currentcounter%countset;
                 }
 
                 currentcounter = currentcounter +1;
