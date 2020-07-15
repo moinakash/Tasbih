@@ -168,9 +168,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (currentcounter == countset){
                     currentcounter = 0;
-                }else if(currentcounter>countset){
-                    currentcounter = currentcounter%countset;
                 }
+//                else if(currentcounter>countset){
+//                    currentcounter = currentcounter%countset;
+//                }
 
                 currentcounter = currentcounter +1;
                 totalcount = totalcount +1;
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        }, 500);
+        }, 100);
 
     }
 
